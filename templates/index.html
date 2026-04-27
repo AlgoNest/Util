@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}PaySlipFree — Free Indian Payroll Tools{% endblock %}
+
+{% block content %}
+<div class="home-tools">
+  <h1>Free Indian Payroll Tools.<br>No login. No catch.</h1>
+  <p>Professional-grade tools used by HR teams, accountants, and freelancers across India.</p>
+
+  <div class="tools-grid">
+    <a href="/payslip-generator/" class="tool-card">
+      <div class="tool-card-icon">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <rect x="4" y="2" width="16" height="20" rx="2"/>
+          <path d="M8 7h8M8 11h8M8 15h5"/>
+        </svg>
+      </div>
+      <h3>Payslip Generator</h3>
+      <p>Generate a professional Indian payslip with PF, HRA, TDS deductions. Download as PDF.</p>
+      <span class="badge">Live</span>
+    </a>
+
+    <div class="tool-card" style="opacity:.45;pointer-events:none;cursor:default;">
+      <div class="tool-card-icon">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+        </svg>
+      </div>
+      <h3>Invoice Generator</h3>
+      <p>Create GST-compliant invoices and download as PDF.</p>
+      <span class="badge" style="background:#FEF3C7;color:#D97706;">Coming soon</span>
+    </div>
+
+    <div class="tool-card" style="opacity:.45;pointer-events:none;cursor:default;">
+      <div class="tool-card-icon">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 6v6l4 2"/>
+        </svg>
+      </div>
+      <h3>GST Calculator</h3>
+      <p>Calculate GST for any amount with all slabs.</p>
+      <span class="badge" style="background:#FEF3C7;color:#D97706;">Coming soon</span>
+    </div>
+  </div>
+</div>
+{% endblock %}
