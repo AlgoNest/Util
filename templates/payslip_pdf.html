@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    color: #0F172A;
+    background: #fff;
+    padding: 0;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 148mm;
+    padding: 24px 28px;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #2563EB;
+    margin-bottom: 18px;
+  }
+
+  .company-block .company-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0F172A;
+    margin-bottom: 3px;
+  }
+  .company-block .company-addr {
+    font-size: 10px;
+    color: #64748B;
+    line-height: 1.5;
+    max-width: 260px;
+  }
+
+  .payslip-label {
+    text-align: right;
+  }
+  .payslip-label .title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2563EB;
+    letter-spacing: .02em;
+  }
+  .payslip-label .period {
+    font-size: 11px;
+    color: #64748B;
+    margin-top: 3px;
+  }
+
+  /* Employee info */
+  .employee-section {
+    display: flex;
+    gap: 40px;
+    background: #F7F8FA;
+    border: 1px solid #E2E6ED;
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+  }
+
+  .emp-col { flex: 1; }
+
+  .emp-field { margin-bottom: 8px; }
+  .emp-field:last-child { margin-bottom: 0; }
+  .emp-field .label {
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: #94A3B8;
+    margin-bottom: 2px;
+  }
+  .emp-field .value {
+    font-size: 11px;
+    font-weight: 600;
+    color: #0F172A;
+  }
+
+  /* Salary table */
+  .salary-section {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  .salary-col { flex: 1; }
+
+  .col-title {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #64748B;
+    padding: 6px 10px;
+    background: #F1F5F9;
+    border-radius: 4px 4px 0 0;
+    border: 1px solid #E2E6ED;
+    border-bottom: none;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #E2E6ED;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+  }
+
+  table tr td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #F1F5F9;
+    font-size: 10.5px;
+  }
+
+  table tr:last-child td { border-bottom: none; }
+
+  table tr td:last-child {
+    text-align: right;
+    font-weight: 600;
+  }
+
+  table tr.total-row td {
+    background: #F8FAFC;
+    font-weight: 700;
+    font-size: 11px;
+    border-top: 1px solid #E2E6ED;
+  }
+
+  /* Net pay */
+  .net-pay-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #EFF6FF;
+    border: 1px solid #BFDBFE;
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin-bottom: 16px;
+  }
+  .net-pay-row .label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #1D4ED8;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+  .net-pay-row .amount {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1D4ED8;
+  }
+
+  /* Footer */
+  .doc-footer {
+    border-top: 1px solid #E2E6ED;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .doc-footer .note {
+    font-size: 9px;
+    color: #94A3B8;
+  }
+  .doc-footer .generated {
+    font-size: 9px;
+    color: #CBD5E1;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="company-block">
+      <div class="company-name">{{ company_name }}</div>
+      {% if company_addr %}
+      <div class="company-addr">{{ company_addr }}</div>
+      {% endif %}
+    </div>
+    <div class="payslip-label">
+      <div class="title">PAYSLIP</div>
+      <div class="period">{{ month }} {{ year }}</div>
+    </div>
+  </div>
+
+  <!-- Employee Info -->
+  <div class="employee-section">
+    <div class="emp-col">
+      <div class="emp-field">
+        <div class="label">Employee Name</div>
+        <div class="value">{{ emp_name }}</div>
+      </div>
+      <div class="emp-field">
+        <div class="label">Designation</div>
+        <div class="value">{{ designation or '—' }}</div>
+      </div>
+    </div>
+    <div class="emp-col">
+      <div class="emp-field">
+        <div class="label">Employee ID</div>
+        <div class="value">{{ emp_id or '—' }}</div>
+      </div>
+      <div class="emp-field">
+        <div class="label">Department</div>
+        <div class="value">{{ department or '—' }}</div>
+      </div>
+    </div>
+    <div class="emp-col">
+      {% if pan %}
+      <div class="emp-field">
+        <div class="label">PAN Number</div>
+        <div class="value">{{ pan }}</div>
+      </div>
+      {% endif %}
+      <div class="emp-field">
+        <div class="label">Pay Period</div>
+        <div class="value">{{ month }} {{ year }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Salary Breakdown -->
+  <div class="salary-section">
+    <!-- Earnings -->
+    <div class="salary-col">
+      <div class="col-title">Earnings</div>
+      <table>
+        <tr><td>Basic Salary</td><td>₹{{ basic }}</td></tr>
+        <tr><td>HRA</td><td>₹{{ hra }}</td></tr>
+        <tr><td>Special Allowance</td><td>₹{{ special }}</td></tr>
+        {% if other_earn != '0.00' %}
+        <tr><td>{{ other_earn_label }}</td><td>₹{{ other_earn }}</td></tr>
+        {% endif %}
+        <tr class="total-row"><td>Gross Salary</td><td>₹{{ gross }}</td></tr>
+      </table>
+    </div>
+
+    <!-- Deductions -->
+    <div class="salary-col">
+      <div class="col-title">Deductions</div>
+      <table>
+        <tr><td>Provident Fund (PF)</td><td>₹{{ pf }}</td></tr>
+        {% if pt != '0.00' %}
+        <tr><td>Professional Tax</td><td>₹{{ pt }}</td></tr>
+        {% endif %}
+        {% if tds != '0.00' %}
+        <tr><td>TDS</td><td>₹{{ tds }}</td></tr>
+        {% endif %}
+        {% if other_ded != '0.00' %}
+        <tr><td>{{ other_ded_label }}</td><td>₹{{ other_ded }}</td></tr>
+        {% endif %}
+        <tr class="total-row"><td>Total Deductions</td><td>₹{{ total_ded }}</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Net Pay -->
+  <div class="net-pay-row">
+    <span class="label">Net Pay (Take Home)</span>
+    <span class="amount">₹{{ net_pay }}</span>
+  </div>
+
+  <!-- Footer -->
+  <div class="doc-footer">
+    <span class="note">This is a computer-generated payslip and does not require a signature.</span>
+    <span class="generated">Generated via PaySlipFree.com</span>
+  </div>
+
+</div>
+</body>
+</html>
