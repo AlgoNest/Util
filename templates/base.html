@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="{% block meta_desc %}Free Indian payslip generator — no login, instant PDF download.{% endblock %}" />
+  <title>{% block title %}PaySlipFree — Free Indian Payslip Generator{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <header class="site-header">
+    <a href="/" class="brand">
+      <span class="brand-mark">P</span>
+      <span class="brand-name">PaySlipFree</span>
+    </a>
+    <nav class="site-nav">
+      <a href="/payslip-generator/" class="nav-link {% if request.path.startswith('/payslip-generator') %}active{% endif %}">Payslip Generator</a>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>Free to use. No login. No data stored.</p>
+    <p class="footer-copy">&copy; 2025 PaySlipFree</p>
+  </footer>
+</body>
+</html>
