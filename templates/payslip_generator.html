@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% block title %}Free Indian Payslip Generator — No Login | PaySlipFree{% endblock %}
+{% block meta_desc %}Generate professional Indian payslips instantly. Includes PF, HRA, TDS, Professional Tax. No signup required. Download as PDF free.{% endblock %}
+
+{% block content %}
+<div class="hero">
+  <span class="hero-badge">Free Forever</span>
+  <h1>Indian Payslip Generator</h1>
+  <p>Fill the form, see a live preview, download your payslip as a PDF. No account needed.</p>
+  <div class="trust-badges">
+    <span class="trust-badge">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      No login required
+    </span>
+    <span class="trust-badge">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      Data never stored
+    </span>
+    <span class="trust-badge">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      Instant PDF download
+    </span>
+  </div>
+</div>
+
+<div class="tool-layout">
+  <!-- ── FORM COLUMN ── -->
+  <div class="form-column">
+
+    <div id="error-container"></div>
+
+    <!-- Card 1: Employee -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title"><span class="step-num">1</span> Employee Details</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="emp_name">Full Name <span style="color:var(--error)">*</span></label>
+          <input type="text" id="emp_name" name="emp_name" placeholder="Rahul Sharma" autocomplete="name" maxlength="80">
+        </div>
+        <div class="form-group">
+          <label for="emp_id">Employee ID</label>
+          <input type="text" id="emp_id" name="emp_id" placeholder="EMP-001" maxlength="30">
+        </div>
+        <div class="form-group">
+          <label for="designation">Designation</label>
+          <input type="text" id="designation" name="designation" placeholder="Software Engineer" maxlength="80">
+        </div>
+        <div class="form-group">
+          <label for="department">Department</label>
+          <input type="text" id="department" name="department" placeholder="Engineering" maxlength="80">
+        </div>
+        <div class="form-group full">
+          <label for="pan">PAN Number <span style="color:var(--text-muted);font-weight:400;text-transform:none;">(optional)</span></label>
+          <input type="text" id="pan" name="pan" placeholder="ABCDE1234F" maxlength="10" style="text-transform:uppercase;">
+          <span class="field-hint">Format: 5 letters · 4 digits · 1 letter</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Company + Period -->
+    <div class="card" style="margin-bottom:16px;">
+      <div class="card-title"><span class="step-num">2</span> Company & Pay Period</div>
+      <div class="form-grid">
+        <div class="form-group full">
+          <label for="company_name">Company Name <span style="color:var(--error)">*</span></label>
+          <input type="text" id="company_name" name="company_name" placeholder="Acme Technologies Pvt. Ltd." maxlength="100">
+        </div>
+        <div class="form-group full">
+          <label for="company_addr">Company Address</label>
+          <input type="text" id="company_addr" name="company_addr" placeholder="123 MG Road, Bangalore - 560001" maxlength="200">
+        </div>
+        <div class="form-group">
+          <label for="month">Month <span style="color:var(--error)">*</span></label>
+          <select id="month" name="month">
+            {% for m in months %}
+            <option value="{{ m }}" {% if m == 'January' %}selected{% endif %}>{{ m }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="year">Year <span style="color:var(--error)">*</span></label>
+          <select id="year" name="year">
+            {% for y in range(2020, 2031) %}
+            <option value="{{ y }}" {% if y == 2025 %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: Salary -->
+    <div class="card">
+      <div class="card-title"><span class="step-num">3</span> Salary Components</div>
+
+      <div class="section-label">Earnings</div>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="basic">Basic Salary (₹) <span style="color:var(--error)">*</span></label>
+          <input type="number" id="basic" name="basic" placeholder="25000" min="0" max="10000000" step="100">
+        </div>
+        <div class="form-group">
+          <label for="hra">HRA (₹)</label>
+          <input type="number" id="hra" name="hra" placeholder="10000" min="0" step="100">
+          <span class="field-hint">House Rent Allowance</span>
+        </div>
+        <div class="form-group">
+          <label for="special">Special Allowance (₹)</label>
+          <input type="number" id="special" name="special" placeholder="5000" min="0" step="100">
+        </div>
+        <div class="form-group">
+          <label for="other_earn">Other Allowance (₹)</label>
+          <input type="number" id="other_earn" name="other_earn" placeholder="0" min="0" step="100">
+        </div>
+        <div class="form-group full">
+          <label for="other_earn_label">Label for Other Allowance</label>
+          <input type="text" id="other_earn_label" name="other_earn_label" placeholder="Travel Allowance" maxlength="50">
+        </div>
+      </div>
+
+      <div class="section-label">Deductions</div>
+      <div class="form-group" style="margin-bottom:12px;">
+        <label>Provident Fund (PF)</label>
+        <div class="pf-toggle">
+          <label><input type="radio" name="pf_mode" value="auto" checked> Auto (12% of Basic)</label>
+          <label><input type="radio" name="pf_mode" value="manual"> Manual</label>
+        </div>
+        <input type="number" id="pf_manual" name="pf_manual" placeholder="Enter PF amount" min="0" step="100" style="display:none;">
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="pt">Professional Tax (₹)</label>
+          <input type="number" id="pt" name="pt" placeholder="200" min="0" max="2500" step="50">
+          <span class="field-hint">Varies by state (max ₹2,500/yr)</span>
+        </div>
+        <div class="form-group">
+          <label for="tds">TDS (₹)</label>
+          <input type="number" id="tds" name="tds" placeholder="0" min="0" step="100">
+          <span class="field-hint">Tax Deducted at Source</span>
+        </div>
+        <div class="form-group">
+          <label for="other_ded">Other Deduction (₹)</label>
+          <input type="number" id="other_ded" name="other_ded" placeholder="0" min="0" step="100">
+        </div>
+        <div class="form-group">
+          <label for="other_ded_label">Label for Other Deduction</label>
+          <input type="text" id="other_ded_label" name="other_ded_label" placeholder="Loan Recovery" maxlength="50">
+        </div>
+      </div>
+
+      <div class="btn-actions">
+        <button type="button" class="btn btn-primary" id="download-btn" onclick="downloadPDF()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span class="btn-text">Download Payslip PDF</span>
+          <div class="spinner"></div>
+        </button>
+        <button type="button" class="btn btn-ghost" onclick="resetForm()">Clear Form</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── PREVIEW COLUMN ── -->
+  <div class="preview-panel">
+    <p style="font-size:.75rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;">Live Preview</p>
+    <div class="preview-card" id="preview-card">
+      <div class="preview-placeholder" id="preview-placeholder">
+        <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" display="block" style="margin:0 auto 8px;">
+          <rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/>
+        </svg>
+        Fill in the form to see a live preview
+      </div>
+      <div id="preview-content" style="display:none;">
+        <div class="preview-header">
+          <div class="company" id="prev-company">Company Name</div>
+          <div class="period" id="prev-period">Pay Period</div>
+        </div>
+        <div class="preview-body">
+          <div class="preview-employee">
+            <div class="name" id="prev-name">Employee Name</div>
+            <div class="meta" id="prev-meta"></div>
+          </div>
+          <table class="preview-table">
+            <tr class="section-head"><td colspan="2">Earnings</td></tr>
+            <tr><td>Basic Salary</td><td id="pv-basic">₹0.00</td></tr>
+            <tr><td>HRA</td><td id="pv-hra">₹0.00</td></tr>
+            <tr><td>Special Allowance</td><td id="pv-special">₹0.00</td></tr>
+            <tr id="pv-other-earn-row" style="display:none;"><td id="pv-other-earn-label">Other</td><td id="pv-other-earn">₹0.00</td></tr>
+            <tr class="total-row"><td>Gross Salary</td><td id="pv-gross">₹0.00</td></tr>
+
+            <tr class="section-head"><td colspan="2">Deductions</td></tr>
+            <tr><td>Provident Fund</td><td id="pv-pf">₹0.00</td></tr>
+            <tr id="pv-pt-row"><td>Professional Tax</td><td id="pv-pt">₹0.00</td></tr>
+            <tr id="pv-tds-row"><td>TDS</td><td id="pv-tds">₹0.00</td></tr>
+            <tr id="pv-other-ded-row" style="display:none;"><td id="pv-other-ded-label">Other Deduction</td><td id="pv-other-ded">₹0.00</td></tr>
+            <tr class="total-row"><td>Total Deductions</td><td id="pv-total-ded">₹0.00</td></tr>
+          </table>
+          <div class="net-pay-box">
+            <span class="label">Net Pay</span>
+            <span class="amount" id="pv-net-pay">₹0.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/payslip.js') }}"></script>
+{% endblock %}
